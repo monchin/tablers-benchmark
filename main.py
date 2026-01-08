@@ -52,7 +52,7 @@ if __name__ == "__main__":
                 f'{ratio:.2f}X',
                 ha='center', va='bottom')
     
-    ax.set_ylabel('Time (seconds)')
+    ax.set_ylabel('Relative Processing Time')
     ax.set_title('PDF Processing Time Comparison')
     
     plt.savefig("table_extraction_benchmark.png")
