@@ -8,5 +8,5 @@ dependencies = [
     "matplotlib>=3.10.8",
     "pdfplumber>=0.11.9",
     "pymupdf>=1.26.7",
-    "tablers>=0.2.0",
+    "tablers>=0.4.2",
 ]
