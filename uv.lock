@@ -356,12 +356,12 @@ wheels = [
 
 [[package]]
 name = "tablers"
-version = "0.5.0"
+version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1c/71/c479909770e4ddd1223678fef5cee5358e972bd6101c094cd95ccc759d55/tablers-0.5.0-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:4d427e8a91375eeae39d18bbec4636033af71f823f1fc8e5b9c9655f44f40b63", size = 3783885, upload-time = "2026-02-25T15:23:28.256Z" },
-    { url = "https://files.pythonhosted.org/packages/30/b9/b9fd6a41e54b452357232a9df7197745f7ca3ea9bc5de5439ab701be2941/tablers-0.5.0-cp310-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:e712e817679509981c537173736a9d35e31a4e905cefd91a1fc1eecc1830a924", size = 4243648, upload-time = "2026-02-25T15:23:31.479Z" },
-    { url = "https://files.pythonhosted.org/packages/f4/93/e767eae33c17b612391cc4ecafcdb1a6a42138530cc541830036a24db837/tablers-0.5.0-cp310-abi3-win_amd64.whl", hash = "sha256:182c8677e15d744645d4c5cc7fc5cab1cf5f0ca681ac9e35133b1d9d01d1681f", size = 3674914, upload-time = "2026-02-25T15:23:29.895Z" },
+    { url = "https://files.pythonhosted.org/packages/89/a3/6ef8c25440a87998ff21853af85e29607683f681ed642c1d0ed7627192ad/tablers-0.6.0-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:19e9c3ad4d743237bd95c0866cbd596ac2f6c54440716095fc0306d5e220946d", size = 3785069, upload-time = "2026-03-01T05:37:13.274Z" },
+    { url = "https://files.pythonhosted.org/packages/f1/26/efd0a80ed6eaeab711649218f1fbb4de6ce31895d4a7232f070b61edfea2/tablers-0.6.0-cp310-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:23679f271d4e7167b2310d3e17918cba4490d7b20c7d5fcba68010f74c161671", size = 4245085, upload-time = "2026-03-01T05:37:12.055Z" },
+    { url = "https://files.pythonhosted.org/packages/9b/27/1e45c46d8d2865093a8e1d09b4dc991c8991a8ee6dd4e56deb8637723290/tablers-0.6.0-cp310-abi3-win_amd64.whl", hash = "sha256:495338a6b6c7f74fce75afe7c5d5c65957b29f9f109c602f204d72857d2407e5", size = 3674542, upload-time = "2026-03-01T05:37:10.495Z" },
 ]
 
 [[package]]
