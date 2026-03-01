@@ -127,6 +127,12 @@ def compute_benchmark_result(
     for pdf_key, gt_pages in gt_per_doc.items():
         pred_pages = pred_per_doc.get(pdf_key, {})
 
+        # Count predictions on pages that have no GT tables (pure false positives).
+        # Without this, total_pred is under-counted and precision is inflated.
+        for page_num, pred_tables_fp in pred_pages.items():
+            if page_num not in gt_pages:
+                total_pred += len(pred_tables_fp)
+
         for page_num, gt_tables in gt_pages.items():
             pred_tables = pred_pages.get(page_num, [])
 
