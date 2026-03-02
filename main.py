@@ -29,6 +29,9 @@ from benchmark.metrics import BenchmarkResult, compute_benchmark_result
 # Colour palette (tablers / pymupdf / pdfplumber / camelot)
 _COLORS = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0']
 
+# Number of runs for tablers; average time is used for comparison (it is much faster than others)
+_TABLERS_RUNS = 10
+
 
 # ---------------------------------------------------------------------------
 # Benchmark runner
@@ -64,6 +67,8 @@ def run_benchmark(
     results: list[BenchmarkResult] = []
     for lib_name, extractor in EXTRACTORS.items():
         print(f"Running {lib_name} …")
+        if lib_name == 'tablers':
+            print(f"  (each document × {_TABLERS_RUNS} runs, using average time for comparison)")
         pred_per_doc: dict[str, dict[int, list]] = {}
         total_time = 0.0
         errors = 0
@@ -71,9 +76,19 @@ def run_benchmark(
         for doc in documents:
             key = str(doc.pdf_path)
             try:
-                page_tables, elapsed = extractor(doc.pdf_path)  # type: ignore[operator]
-                pred_per_doc[key] = page_tables
-                total_time += elapsed
+                if lib_name == 'tablers':
+                    # Run tablers _TABLERS_RUNS times and use average time for fair comparison
+                    run_times: list[float] = []
+                    for _ in range(_TABLERS_RUNS):
+                        page_tables, elapsed = extractor(doc.pdf_path)  # type: ignore[operator]
+                        run_times.append(elapsed)
+                    elapsed = sum(run_times) / len(run_times)
+                    pred_per_doc[key] = page_tables
+                    total_time += elapsed
+                else:
+                    page_tables, elapsed = extractor(doc.pdf_path)  # type: ignore[operator]
+                    pred_per_doc[key] = page_tables
+                    total_time += elapsed
             except Exception as exc:
                 print(f"  [warn] {doc.pdf_path.name}: {exc}")
                 pred_per_doc[key] = {}
