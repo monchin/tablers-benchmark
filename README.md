@@ -20,29 +20,63 @@ Two dimensions are measured:
 | [pdfplumber](https://github.com/jsvine/pdfplumber) | PDF parsing library built on pdfminer, with table extraction |
 | [camelot](https://github.com/camelot-dev/camelot) | Dedicated table extraction library; uses `lattice` flavor here |
 
+All libraries are used in default settings. `camelot` uses the `lattice` flavor.
+
 ---
 
-## Dataset — ICDAR 2013
+## Dataset — ICDAR 2013 Table Competition
 
-### What it is
+This benchmark uses the **ICDAR 2013 Table Competition dataset**, released as part of the table detection and structure recognition competition at the International Conference on Document Analysis and Recognition (ICDAR 2013).
 
-The benchmark uses the **ICDAR 2013 Table Recognition Competition** dataset —
-the industry-standard ground-truth corpus for born-digital PDF table extraction,
-cited in thousands of publications.
+It is important to note that ICDAR 2013 hosted multiple independent competitions (e.g., Robust Reading for scene text and Table Competition for document tables). The dataset used in this benchmark corresponds specifically to the **Table Competition track**, not to the scene text datasets from the same conference.
 
-It contains **67 PDFs** (158 annotated tables) drawn from two sources:
+### Scope and Purpose
 
-| Subset | Source | Table style |
-|--------|--------|-------------|
-| `competition-dataset-eu` | European Union official publications | Complex layout, frequent merged cells |
-| `competition-dataset-us` | US government reports (e.g. GAO) | Simpler, mostly regular row/col grids |
+The ICDAR 2013 Table Competition dataset was designed to evaluate algorithms for:
 
-Each PDF ships with two XML files:
+- **Table region detection** (localizing table areas in PDF documents)
+- **Table structure recognition** (recovering row/column structure and cell boundaries)
 
-| File | Purpose | Used here |
-|------|---------|-----------|
-| `*-reg.xml` | Table region bounding boxes only (Track A) | No |
-| `*-str.xml` | Full cell structure + text content (Track B/C) | **Yes** |
+The documents are **born-digital PDFs** (not scanned images), making the dataset particularly relevant for PDF-native table extraction systems.
+
+### Data Sources
+
+The dataset consists of government and institutional PDF documents collected from two public sources:
+
+- European Union (EU) publications
+- United States (US) government publications
+
+The competition organizers did not define or publish any formal comparison of structural complexity between these two subsets. Therefore, no claims regarding relative difficulty or layout complexity (e.g., “EU tables are more complex than US tables”) should be made unless supported by independent quantitative analysis.
+
+### Dataset Size
+
+The dataset contains:
+
+- 67 PDF documents
+- 158 annotated tables in total
+
+The documents are divided into EU and US subsets according to their source, as originally released by the competition organizers.
+
+### Annotation Format
+
+Each document is accompanied by ground-truth XML files:
+
+- `*-reg.xml` — Table region annotations (bounding boxes)
+- `*-str.xml` — Full structural annotations (rows, columns, cells, and content)
+
+This separation enables evaluation at two levels:
+
+1. **Detection-level evaluation** (table localization only)
+2. **Structure-level evaluation** (full table reconstruction)
+
+### Benchmark Relevance
+
+The ICDAR 2013 Table Competition dataset remains one of the earliest standardized benchmarks for born-digital PDF table extraction. It is frequently used in research and engineering comparisons due to:
+
+- Public availability
+- Structured ground truth
+- Clear evaluation protocol
+- Manageable dataset size for reproducible benchmarking
 
 ### Where to download
 
