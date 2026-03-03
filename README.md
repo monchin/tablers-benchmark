@@ -46,8 +46,6 @@ The dataset consists of government and institutional PDF documents collected fro
 - European Union (EU) publications
 - United States (US) government publications
 
-The competition organizers did not define or publish any formal comparison of structural complexity between these two subsets. Therefore, no claims regarding relative difficulty or layout complexity (e.g., “EU tables are more complex than US tables”) should be made unless supported by independent quantitative analysis.
-
 ### Dataset Size
 
 The dataset contains:
