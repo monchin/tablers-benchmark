@@ -20,7 +20,7 @@ Two dimensions are measured:
 | [pdfplumber](https://github.com/jsvine/pdfplumber) | PDF parsing library built on pdfminer, with table extraction |
 | [camelot](https://github.com/camelot-dev/camelot) | Dedicated table extraction library; uses `lattice` flavor here |
 
-All libraries are used in default settings. `camelot` uses the `lattice` flavor.
+All libraries use their **default configuration** for table extraction; **camelot** is run with the **lattice** flavor. PyMuPDF, however, excludes any table that has only one row or only one column (see [PyMuPDF#3987](https://github.com/pymupdf/PyMuPDF/issues/3987)); this behaviour is not configurable. Among the compared libraries, only **tablers** allows configuring minimum row/column counts. For a fair comparison, the benchmark therefore includes both **tablers** (default) and **tablers (min 2×2)** — the latter with `min_rows=2` and `min_columns=2` so that single-row/single-column tables are filtered out in the same way as in PyMuPDF.
 
 ---
 

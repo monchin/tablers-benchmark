@@ -63,6 +63,35 @@ def extract_tablers(
     return result, elapsed
 
 
+def extract_tablers_min2(
+    pdf_path: str | Path,
+) -> tuple[dict[int, list[list[list[str | None]]]], float]:
+    """Extract tables with **tablers** using min_rows=2, min_columns=2 (aligned with PyMuPDF's requirement)."""
+    from tablers import Document as TabDoc, find_tables, TfSettings
+
+    tf_settings = TfSettings(min_rows=2, min_columns=2)
+    pdf_bytes = Path(pdf_path).read_bytes()
+    result: dict[int, list[list[list[str | None]]]] = {}
+
+    tic = time.perf_counter()
+    with TabDoc(bytes=pdf_bytes) as doc:
+        for page_num, page in enumerate(doc.pages(), start=1):
+            tables_raw = find_tables(
+                page,
+                extract_text=True,
+                tf_settings=tf_settings,
+            )
+            grids: list[list[list[str | None]]] = []
+            for table in tables_raw:
+                rows = table.to_list()
+                grids.append([[_norm_cell(cell.text) for cell in row] for row in rows])
+            if grids:
+                result[page_num] = grids
+    elapsed = time.perf_counter() - tic
+
+    return result, elapsed
+
+
 # ---------------------------------------------------------------------------
 # PyMuPDF
 # ---------------------------------------------------------------------------
@@ -152,6 +181,7 @@ def extract_camelot(
 
 EXTRACTORS: dict[str, object] = {
     'tablers': extract_tablers,
+    'tablers (min 2×2)': extract_tablers_min2,
     'pymupdf': extract_pymupdf,
     'pdfplumber': extract_pdfplumber,
     'camelot': extract_camelot,

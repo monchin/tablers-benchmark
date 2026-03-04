@@ -26,8 +26,8 @@ from benchmark.datasets import load_icdar2013
 from benchmark.extractors import EXTRACTORS
 from benchmark.metrics import BenchmarkResult, compute_benchmark_result
 
-# Colour palette (tablers / pymupdf / pdfplumber / camelot)
-_COLORS = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0']
+# Colour palette (tablers / tablers min 2×2 / pymupdf / pdfplumber / camelot)
+_COLORS = ['#2196F3', '#1976D2', '#FF5722', '#4CAF50', '#9C27B0']
 
 # Number of runs for tablers; average time is used for comparison (it is much faster than others)
 _TABLERS_RUNS = 10
@@ -67,7 +67,7 @@ def run_benchmark(
     results: list[BenchmarkResult] = []
     for lib_name, extractor in EXTRACTORS.items():
         print(f"Running {lib_name} …")
-        if lib_name == 'tablers':
+        if lib_name.startswith('tablers'):
             print(f"  (each document × {_TABLERS_RUNS} runs, using average time for comparison)")
         pred_per_doc: dict[str, dict[int, list]] = {}
         total_time = 0.0
@@ -76,7 +76,7 @@ def run_benchmark(
         for doc in documents:
             key = str(doc.pdf_path)
             try:
-                if lib_name == 'tablers':
+                if lib_name.startswith('tablers'):
                     # Run tablers _TABLERS_RUNS times and use average time for fair comparison
                     run_times: list[float] = []
                     for _ in range(_TABLERS_RUNS):
@@ -124,16 +124,21 @@ def _bar(ax: plt.Axes, libs: list[str], values: list[float],
     bars = ax.bar(libs, values, color=_COLORS[:len(libs)], alpha=0.85, zorder=3)
     ax.set_title(title, fontsize=10, fontweight='bold')
     ax.set_ylabel(ylabel, fontsize=9)
-    top = ylim_top if ylim_top is not None else max(values) * 1.25 if max(values) > 0 else 1
+    max_val = max(values) if values else 0
+    # Leave ~15% headroom above max so value labels don't touch the bar
+    top = ylim_top if ylim_top is not None else (max_val * 1.2 if max_val > 0 else 1)
     ax.set_ylim(0, top)
     ax.grid(axis='y', linestyle='--', alpha=0.4, zorder=0)
-    ax.tick_params(axis='x', labelsize=9)
+    ax.tick_params(axis='x', labelsize=8)
+    plt.setp(ax.get_xticklabels(), rotation=35, ha='right', rotation_mode='anchor')
+    # Fixed gap as fraction of y-axis so spacing looks consistent across subplots
+    label_y_offset = top * 0.03
     for bar, val in zip(bars, values):
         ax.text(
             bar.get_x() + bar.get_width() / 2,
-            bar.get_height() + top * 0.02,
+            bar.get_height() + label_y_offset,
             f'{val:{fmt}}',
-            ha='center', va='bottom', fontsize=8,
+            ha='center', va='bottom', fontsize=8, rotation=45,
         )
 
 
@@ -147,17 +152,22 @@ def _grouped_bar(ax: plt.Axes, libs: list[str],
     ax.set_title(title, fontsize=10, fontweight='bold')
     ax.set_ylabel(ylabel, fontsize=9)
     ax.set_xticks(x)
-    ax.set_xticklabels(libs, fontsize=9)
-    ax.set_ylim(0, 1.25)
+    ax.set_xticklabels(libs, fontsize=8)
+    plt.setp(ax.get_xticklabels(), rotation=35, ha='right', rotation_mode='anchor')
+    # Extra headroom so three value labels per bar don't overlap
+    ax.set_ylim(0, 1.45)
     ax.grid(axis='y', linestyle='--', alpha=0.4, zorder=0)
     for i, (label, vals, colour) in enumerate(series):
         offset = (i - (n - 1) / 2) * width
         bars = ax.bar(x + offset, vals, width, label=label, color=colour, alpha=0.85, zorder=3)
+        # Same gap from bar top to label for all series
+        bar_label_gap = 0.04
         for bar, val in zip(bars, vals):
+            y_pos = bar.get_height() + bar_label_gap
             ax.text(
                 bar.get_x() + bar.get_width() / 2,
-                bar.get_height() + 0.02,
-                f'{val:.3f}', ha='center', va='bottom', fontsize=7,
+                y_pos,
+                f'{val:.3f}', ha='center', va='bottom', fontsize=7, rotation=45,
             )
     ax.legend(fontsize=8)
 
@@ -165,13 +175,14 @@ def _grouped_bar(ax: plt.Axes, libs: list[str],
 def plot_results(results: list[BenchmarkResult], output_path: str) -> None:
     libs = [r.library for r in results]
 
-    fig = plt.figure(figsize=(18, 11))
+    fig = plt.figure(figsize=(18, 13))
+    fig.subplots_adjust(bottom=0.12, top=0.88)
     fig.suptitle(
-        'PDF Table Extraction Benchmark  ·  ICDAR 2013 Dataset\n'
+        'PDF Table Extraction Benchmark  ·  ICDAR 2013 Table Competition Dataset\n'
         'Speed (lower is better)  ·  Accuracy metrics (higher is better)',
-        fontsize=13, fontweight='bold', y=0.98,
+        fontsize=13, fontweight='bold', y=0.96,
     )
-    gs = gridspec.GridSpec(2, 4, figure=fig, hspace=0.45, wspace=0.38)
+    gs = gridspec.GridSpec(2, 4, figure=fig, hspace=0.5, wspace=0.45)
 
     # ── Row 0 ───────────────────────────────────────────────────────────────
 
