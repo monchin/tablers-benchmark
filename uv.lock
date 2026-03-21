@@ -492,12 +492,12 @@ wheels = [
 
 [[package]]
 name = "tablers"
-version = "0.7.2"
+version = "0.7.3"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a6/69/0a183a48ef97edd5b8cf6f1fc9b85bbfb8567b1b43434fb6f4b373164cb7/tablers-0.7.2-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:f1816c8dbe064edf539b248b0429dcb474eedb57a10dc81014840f6dd6a1d026", size = 3786647, upload-time = "2026-03-20T15:14:23.612Z" },
-    { url = "https://files.pythonhosted.org/packages/db/f8/ce040570dfef2b6b91d9e3ca8f925ff5058e7ed6e08dad36584e2b0395d2/tablers-0.7.2-cp310-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:eb85e4da865c63604625aa797388ad23c039689cff5a509117d0b94058ca4a19", size = 4252378, upload-time = "2026-03-20T15:14:26.941Z" },
-    { url = "https://files.pythonhosted.org/packages/9e/af/c0e945894afc8d6d8a5344bd32e1008fc946a6764f79376c4a4075ff5a76/tablers-0.7.2-cp310-abi3-win_amd64.whl", hash = "sha256:2e8e454741374b66fddeabf36f5be5b85c35503e6e2eb820a02e5c6d563be7b1", size = 3664393, upload-time = "2026-03-20T15:14:25.34Z" },
+    { url = "https://files.pythonhosted.org/packages/56/2e/2e5824228892cf556a6932a7c44be4eadb45f67280697451ef12d5a8b970/tablers-0.7.3-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:64a669f0fd919b4f51b8e3379686607cf617e4c60ef3ecc467ba66a2d800d9a2", size = 3781436, upload-time = "2026-03-21T08:25:18.375Z" },
+    { url = "https://files.pythonhosted.org/packages/f6/bc/8752cacdfb93fda74222888179fe80797b85ab9003c92b2860058c89e8bb/tablers-0.7.3-cp310-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:8a9f4cda3b44d3fde0ebd02068bbf39390c651f86d4cb35866c6a5e47719c226", size = 4242857, upload-time = "2026-03-21T08:25:20.011Z" },
+    { url = "https://files.pythonhosted.org/packages/fe/2c/6c3185314fc0ace45ed9addef6109e61059313c3646f6c27383bb8756bb2/tablers-0.7.3-cp310-abi3-win_amd64.whl", hash = "sha256:f1e8d83530724192336a4de58241b62d257a102557e6ffe1fee69d6df5e75f90", size = 3671585, upload-time = "2026-03-21T08:25:16.718Z" },
 ]
 
 [[package]]
